@@ -1,99 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="js/app.js"></script>
-  <title>Heart Disease Detector</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A simple responsive web app to diagnose the patient for a possible heart disorder."
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+    <title>Heart Disease Detector</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="headline">
+        <h1 class="headline__title">Heart Disease Detector</h1>
+        <p class="headline__note">
+          Fill out the form below to define the presence or absence of a heart disease
+        </p>
+      </header>
 
-<div class="container">
-  <header class="headline">
-  <h1 class="headline__title">Heart Disease Detector</h1>
-  <p class="headline__note">Fill out the form below to define the presence or absence of a heart disease</p>
-  </header>
+      <form class="form flex" onsubmit="result(); return false;">
+        <div class="box flex">
+          <label for="thal" class="label">Thalassemia</label>
+          <select id="thal" name="thal" class="input" required>
+            <option value="" disabled selected>--Select a current thal condition--</option>
+            <option value="3">Normal</option>
+            <option value="6">Fixed Defect</option>
+            <option value="7">Reversable Defect</option>
+          </select>
+        </div>
 
-  <form class="form flex" onsubmit="result(); return false;">
+        <div class="box flex">
+          <label for="number_of_major_vessels" class="label">Number of Major Vessels</label>
+          <select id="number_of_major_vessels" name="number_of_major_vessels" class="input" required>
+            <option value="" disabled selected>--Select a current major number of vessels--</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
 
-    <div class="box flex">
-      <label for="thal" class="label">Thalassemia</label>
-      <select name="thal" class="input">
-        <option value="" disabled>--Select a current thal condition--</option>
-        <option value="3">Normal</option>
-        <option value="6">Fixed Defect</option>
-        <option value="7">Reversable Defect</option>
-      </select>
+        <div class="box flex">
+          <label for="chest" class="label">Chest Pain Type</label>
+          <select id="chest" name="chest" class="input" required>
+            <option value="" disabled selected>--Select a current pain type--</option>
+            <option value="1">Typical angina</option>
+            <option value="2">Atypical angina</option>
+            <option value="3">Non-anginal pain</option>
+            <option value="4">Asymptomatic</option>
+          </select>
+        </div>
+
+        <div class="box flex">
+          <label for="oldpeak" class="label">
+            Oldpeak
+            <span class="info">(ST depression induced by exercise relative to rest)</span>
+          </label>
+          <input
+            type="number"
+            id="oldpeak"
+            name="oldpeak"
+            class="input"
+            placeholder="Enter the patient's oldpeak..."
+            step="0.1"
+            min="0"
+            required
+          />
+        </div>
+
+        <div class="box flex">
+          <label for="slope" class="label">
+            Slope
+            <span class="info">(The slope of the peak exercise ST segment)</span>
+          </label>
+          <select id="slope" name="slope" class="input" required>
+            <option value="" disabled selected>--Select a current slope value--</option>
+            <option value="1">Upsloping</option>
+            <option value="2">Flat</option>
+            <option value="3">Downsloping</option>
+          </select>
+        </div>
+
+        <div class="box flex">
+          <label for="max_heart_rate" class="label">Maximum Heart Rate</label>
+          <input
+            type="number"
+            id="max_heart_rate"
+            name="max_heart_rate"
+            class="input"
+            placeholder="Enter the patient's maximum heart rate..."
+            min="1"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn">Result</button>
+        <button type="reset" class="btn btnReset" onclick="onReset()">Reset</button>
+
+        <p id="result" aria-live="polite"></p>
+      </form>
     </div>
-
-    <div class="box flex">
-      <p class="label">Number of Major Vessels</p>
-      <select name="number_of_major_vessels" class="input">
-        <option value="" disabled selected>--Select a current major number of vessels--</option>
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-    </div>
-    
-    <div class="box flex">
-      <label for="chest" class="label">Chest Pain Type</label>
-      <select name="chest" class="input">
-        <option value="" disabled selected>--Select a current pain type--</option>
-        <option value="1">Typical angina</option>
-        <option value="2">Atypical angina</option>
-        <option value="3">Non-anginal pain</option>
-        <option value="4">Asymptomatic</option>
-      </select>
-    </div>
-
-    <div class="box flex">
-      <label for="oldpeak" class="label">Oldpeak
-        <span class="info">(ST depression induced by exercise relative to rest)</span>
-      </label>
-      <input 
-        type="number" 
-        id="oldpeak" 
-        name="oldpeak" 
-        class="input" 
-        placeholder="Enter the patient's oldpeak..." 
-        step="0.1" 
-        min="0.1">
-    </div>
-
-    <div class="box flex">
-      <p class="label">Slope
-        <span class="info">(The slope of the peak exercise ST segment)</span>
-      </p>
-      <select name="slope" class="input">
-        <option value="" disabled selected>--Select a current slope value--</option>
-        <option value="1">Upsloping</option>
-        <option value="2">Flat</option>
-        <option value="3">Downsloping</option>
-      </select>
-    </div>
-
-    <div class="box flex">
-      <label for="max_heart_rate" class="label">Maximum Heart Rate</label>
-      <input 
-        type="number" 
-        id="max_heart_rate" 
-        name="max_heart_rate" 
-        class="input" 
-        placeholder="Enter the patient's maximum heart rate..." 
-        min="1">
-    </div>
-
-    <button type="submit" class="btn">Result</button>
-    <button type="reset" class="btn btnReset" onclick="onReset()">Reset</button>
-
-    <p id="result"></p>
-  </form>
-</div>
-
-</body>
+  </body>
 </html>
