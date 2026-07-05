@@ -37,10 +37,6 @@ body::before {
   margin-bottom: 1em;
 }
 
-/* 
-  Locally
-*/
-
 .headline {
   text-align: center;
   margin-bottom: 3em;
@@ -55,7 +51,7 @@ body::before {
 .headline__note {
   margin-top: .5em;
   font-style: italic;
-  font-weight: 600;  
+  font-weight: 600;
 }
 
 .form {
@@ -70,6 +66,7 @@ body::before {
 .label {
   font-weight: 600;
   margin-bottom: .5em;
+  display: block; /* keep label on its own line, matching the previous <p class="label"> layout */
 }
 
 .info {
@@ -87,6 +84,17 @@ body::before {
   border: none;
   border-left: 5px solid #2BAE66;
   box-shadow: 0 1px 2px #2BAE66;
+  transition: box-shadow .2s, border-left-color .2s; /* smooth highlight/unhighlight */
+}
+
+/*
+  Added: this class is toggled by app.js on focus/focusout,
+  but had no matching rule before, so the intended focus
+  highlight never actually appeared. This restores that feedback.
+*/
+.boxvisit {
+  border-left-color: #006b38;
+  box-shadow: 0 0 0 2px #2bae66;
 }
 
 .btn {
@@ -130,7 +138,7 @@ body::before {
   }
 
   .form {
-    margin-bottom: 0;  
+    margin-bottom: 0;
   }
 }
 
